@@ -16,3 +16,14 @@ class WorkerListView(TemplateView):
         context ['workers'] = workers
 
         return render(self.request, self.template_name, context)
+
+class PersonListView(TemplateView):
+    template_name = "person_list.html"
+
+    def get(self, request, *args, **kwargs):
+        context = super(PersonListView, self).get_context_data(**kwargs)
+
+        persons = Person.objects.all()
+        context ['persons'] = persons
+
+        return render(self.request, self.template_name, context)

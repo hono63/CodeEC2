@@ -46,7 +46,7 @@ def person_edit(request, person_id=None):
     
     if request.method == 'POST':
         #POSTされたrequestからフォームを作成
-        form = PersonForm(request.POST, isinstance=person)
+        form = PersonForm(request.POST, instance=person)
         if form.is_valid():
             person = form.save(commit=False)
             person.save()

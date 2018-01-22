@@ -36,8 +36,6 @@ def person_edit(request, person_id=None):
         person = get_object_or_404(Person, pk=person_id)
     else:
         person = Person()
-
-    HttpResponse("Person編集")
     
     if request.method == 'POST':
         #POSTされたrequestからフォームを作成

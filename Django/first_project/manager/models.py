@@ -23,7 +23,7 @@ class Person(models.Model):
 
     name        = models.CharField(max_length=128)
     #birthday    = models.DateTimeField()
-    sex         = models.IntegerField(editable=False)
+    sex         = models.IntegerField(editable=True)
     #address_from = models.IntegerField()
     #current_address = models.IntegerField()
     #email       = models.EmailField()

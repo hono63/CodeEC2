@@ -43,7 +43,8 @@ def person_edit(request, person_id=None):
         if form.is_valid():
             person = form.save(commit=False)
             person.save()
-            return redirect('PersonListView')
+            #return redirect('PersonListView')
+            return HttpResponse("Person編集")
     else:
         #personインスタンスからフォームを作成
         form = PersonForm(instance=person)

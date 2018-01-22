@@ -30,6 +30,13 @@ class PersonListView(TemplateView):
 
         return render(self.request, self.template_name, context)
 
+def person_list2(request):
+    """書籍の一覧"""
+    persons2 = Person.objects.all().order_by('id')
+    return render(request,
+                  'person_list2.html',     # 使用するテンプレート
+                  {'persons2': persons2})         # テンプレートに渡すデータ
+
 def person_edit(request, person_id=None):
     """Personの編集"""
     if person_id:
@@ -43,8 +50,7 @@ def person_edit(request, person_id=None):
         if form.is_valid():
             person = form.save(commit=False)
             person.save()
-            #return redirect('PersonListView')
-            return HttpResponse("Person編集")
+            return redirect('person_list2')
     else:
         #personインスタンスからフォームを作成
         form = PersonForm(instance=person)
@@ -54,4 +60,7 @@ def person_edit(request, person_id=None):
 
 def person_delete(request, person_id):
     """Personの削除"""
-    return HttpResponse("Person削除")
+    #return HttpResponse("Person削除")
+    person = get_object_or_404(Person, pk=person_id)
+    person.delete()
+    return redirect('person_list2')

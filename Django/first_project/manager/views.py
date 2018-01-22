@@ -38,7 +38,7 @@ def person_edit(request, person_id=None):
     else:
         person = Person()
     
-    if request.method = 'POST':
+    if request.method == 'POST':
         #POSTされたrequestからフォームを作成
         form = PersonForm(request.POST, isinstance=person)
         if form.is_valid():

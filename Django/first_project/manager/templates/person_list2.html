@@ -16,9 +16,8 @@ table {
       <thead>
         <tr>
           <th>ID</th>
-          <th>書籍名</th>
-          <th>出版社</th>
-          <th>ページ数</th>
+          <th>名は</th>
+          <th>性別</th>
           <th>操作</th>
         </tr>
       </thead>
@@ -27,8 +26,7 @@ table {
         <tr>
           <td>{{ person.id }}</td>
           <td>{{ person.name }}</td>
-          <td>{{ person.publisher }}</td>
-          <td>{{ person.page }}</td>
+          <td>{{ person.sex }}</td>
           <td>
             <a href="{% url 'person_mod' person_id=person.id %}" class="btn btn-default btn-sm">修正</a>
             <a href="{% url 'person_del' person_id=person.id %}" class="btn btn-default btn-sm">削除</a>

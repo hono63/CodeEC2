@@ -28,8 +28,8 @@ from django.conf.urls import url
 
 urlpatterns += [
     url(r'^person/add/$', manager_view.person_edit, name='person_add'),  # 登録
-    url(r'^person/mod/(?P<book_id>\d+)/$', manager_view.person_edit, name='person_mod'),  # 修正
-    url(r'^person/del/(?P<book_id>\d+)/$', manager_view.person_delete, name='person_del'),  # 削除
+    url(r'^person/mod/(?P<person_id>\d+)/$', manager_view.person_edit, name='person_mod'),  # 修正
+    url(r'^person/del/(?P<person_id>\d+)/$', manager_view.person_delete, name='person_del'),  # 削除
 ]
 
 from django.conf import settings

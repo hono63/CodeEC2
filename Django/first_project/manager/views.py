@@ -54,4 +54,4 @@ def person_edit(request, person_id=None):
 
 def person_delete(request, person_id):
     """Personの削除"""
-    return HttpRequest("Person削除")
+    return HttpResponse("Person削除")

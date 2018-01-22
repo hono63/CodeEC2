@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrapform', # デバッグツール
     'debug_toolbar', # デバッグツール
     'manager',  #追加部分
 ]

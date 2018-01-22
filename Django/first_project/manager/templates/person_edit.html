@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Person Edit{% endblock %}
+{% load bootstrap %}
+
+{% block content %}
+    <h3 class="page-header">書籍の編集</h3>
+    {% if person_id %}
+    <form action="{% url 'person_mod' person_id=person_id %}" method="post" class="form-horizontal" role="form">
+    {% else %}
+    <form action="{% url 'person_add' %}" method="post" class="form-horizontal" role="form">
+    {% endif %}
+      {% csrf_token %}
+      {{ form|bootstrap_horizontal }}
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">送信</button>
+        </div>
+      </div>
+    </form>
+    <a href="{% url 'person_list' %}" class="btn btn-default btn-sm">戻る</a>
+{% endblock content %}

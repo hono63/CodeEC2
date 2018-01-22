@@ -32,11 +32,12 @@ class PersonListView(TemplateView):
 
 def person_edit(request, person_id=None):
     """Personの編集"""
-    #return HttpRequest("Person編集")
     if person_id:
         person = get_object_or_404(Person, pk=person_id)
     else:
         person = Person()
+
+    HttpResponse("Person編集")
     
     if request.method == 'POST':
         #POSTされたrequestからフォームを作成

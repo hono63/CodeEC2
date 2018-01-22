@@ -27,7 +27,7 @@ urlpatterns = [
 from django.conf.urls import url
 
 urlpatterns += [
-    url(r'^person/$', manager_view.person_list2, name='person_list2'),   # 一覧
+    url(r'^person/$', manager_view.person_list2, name='person_list'),   # 一覧
     url(r'^person/add/$', manager_view.person_edit, name='person_add'),  # 登録
     url(r'^person/mod/(?P<person_id>\d+)/$', manager_view.person_edit, name='person_mod'),  # 修正
     url(r'^person/del/(?P<person_id>\d+)/$', manager_view.person_delete, name='person_del'),  # 削除

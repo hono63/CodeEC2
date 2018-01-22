@@ -2,8 +2,14 @@
 {% block title %}Person Edit{% endblock %}
 {% load bootstrap %}
 
-{% block content %}
-    <h3 class="page-header">書籍の編集</h3>
+{% block body %}
+<div id="wrapper">
+  <div id="page-wrapper">
+	<div class="row">
+	  <div class="col-lg-6 full-width margin-top-20percent">
+		<div class="panel panel-default full-width">
+
+    <h3 class="page-header">Personの編集</h3>
     {% if person_id %}
     <form action="{% url 'person_mod' person_id=person_id %}" method="post" class="form-horizontal" role="form">
     {% else %}
@@ -18,4 +24,10 @@
       </div>
     </form>
     <a href="{% url 'person_list' %}" class="btn btn-default btn-sm">戻る</a>
-{% endblock content %}
+
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+{% endblock %}

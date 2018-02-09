@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, UpdateView, CreateView
 
 from manager.models import *
 from manager.forms import *
@@ -64,3 +64,7 @@ def person_delete(request, person_id):
     person = get_object_or_404(Person, pk=person_id)
     person.delete()
     return redirect('person_list2')
+
+class ManagerListView(ListView):
+    model = Manager
+    template = "manager_list.html"

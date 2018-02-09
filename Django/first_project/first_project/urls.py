@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('worker_list/', manager_view.WorkerListView.as_view()),
     path('person_list/', manager_view.PersonListView.as_view()),
+    path('manager_list/', manager_view.ManagerListView.as_view()),
 ]
 
 from django.conf.urls import url

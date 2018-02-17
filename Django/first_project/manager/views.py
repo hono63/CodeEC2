@@ -11,17 +11,29 @@ from manager.forms import PersonForm
 
 class GeneralList(ListView):
     template_name = "general_list.html"
+
     def setting(self, model, title):
         self.title = title
         self.model = model
 
+    def get_context_data(self, **kwargs):
+        """
+        Detailと同じような方法で。
+        """
+        context = super().get_context_data(**kwargs)
+
+        fields = kwargs["object"].__dict__
+        context ['fields'] = zip(fields.keys(), fields.values())
+
+        return context
+
 class GeneralDetail(DetailView):
     template_name = "general_detail.html"
+
     def setting(self, model, form, title):
         self.title = title
         self.model = model
-        self.form = form
-    
+
     def get_context_data(self, **kwargs):
         """
         参考：
@@ -50,15 +62,7 @@ class GeneralAdd(CreateView):
         self.title = title
         self.model = model
 
-#class GeneralView:
-    #def __init__(self, model, title):
-        #self.List = ListView()
-        #self.Edit = UpdateView()
-        #self.Add = CreateView()
-        #self.Delete = DeleteView()
-        #self.Detail = DetailView()
-        #self.model = model
-        #self.template_name = template_name
+# PersonのView
 
 class PersonList(GeneralList):
     def __init__(self):
@@ -68,7 +72,7 @@ class PersonList(GeneralList):
 class PersonDetail(GeneralDetail):
     def __init__(self):
         # スーパークラスの設定
-        super(PersonDetail, self).setting(Person, PersonForm, "Person")
+        super(PersonDetail, self).setting(Person, "Person")
 
 
 class PersonEdit(GeneralEdit):
@@ -81,24 +85,14 @@ class PersonAdd(GeneralAdd):
         # スーパークラスの設定
         super(PersonAdd, self).setting(Person, "Person")
 
-class PersonListView(TemplateView):
-    template_name = "person_list.html"
-
-    def get(self, request, *args, **kwargs):
-        context = super(PersonListView, self).get_context_data(**kwargs)
-
-        persons = Person.objects.all()
-        context ['persons'] = persons
-
-        return render(self.request, self.template_name, context)
-
-
 def person_delete(request, person_id):
     """Personの削除"""
     #return HttpResponse("Person削除")
     person = get_object_or_404(Person, pk=person_id)
     person.delete()
     return redirect('person_list2')
+
+# WorkerのView
 
 class ManagerListView(ListView):
     model = Manager

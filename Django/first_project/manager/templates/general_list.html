@@ -22,6 +22,7 @@
         </thead>
         <tbody>
         {% for person in object_list %}
+        {% for f,v in fields %}
         <tr>
             <td>{{person.id}}</td>
             <td>

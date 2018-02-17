@@ -23,18 +23,20 @@ class GeneralDetail(DetailView):
         self.form = form
     
     def get_context_data(self, **kwargs):
-        context = super(GeneralDetail, self).get_context_data(**kwargs)
+        """
+        参考：
+        https://stackoverflow.com/questions/10353804/how-do-i-loop-through-fields-of-an-object
+        https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-display/
+        https://stackoverflow.com/questions/2415865/iterating-through-two-lists-in-django-templates
+        """
+        context = super().get_context_data(**kwargs)
 
         #dicobj = self.form(data=model_to_dict(self.model.objects.get(pk=kwargs["pk"])))
         #fields = self.form(data=model_to_dict(kwargs["object"]))
         fields = kwargs["object"].__dict__
         context ['fields'] = zip(fields.keys(), fields.values())
-        #context ['values'] = fields.values()
-        #context ['loop'] = [2,3]
-        #context.update(fields)
 
         return context
-        #return render(self.request, self.template_name, context)
 
 class GeneralEdit(UpdateView):
     template_name = "general_form.html"

@@ -1,23 +1,30 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.views.generic import TemplateView, ListView, UpdateView, CreateView
+from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DetailView, DeleteView
 
-from manager.models import *
-from manager.forms import *
+from manager.models import Person, Worker, Manager
+from manager.forms import PersonForm
 
 # Create your views here.
 #get_object_404(Person, id=20)
 
-class WorkerListView(TemplateView):
-    template_name = "worker_list.html"
+class GeneralList:
+    def __init__(self, model, title):
+        self.title = title
+        self.model = model
+        self.template_name = "general_list.html"
 
-    def get(self, request, *args, **kwargs):
-        context = super(WorkerListView, self).get_context_data(**kwargs)
+class GeneralView:
+    def __init__(self, model, title):
+        self.List = ListView()
+        self.Edit = UpdateView()
+        self.Add = CreateView()
+        self.Delete = DeleteView()
+        self.Detail = DetailView()
+        self.model = model
+        self.template_name = template_name
 
-        workers = Worker.objects.all()
-        context ['workers'] = workers
-
-        return render(self.request, self.template_name, context)
+PersonList = GeneralList(Person, "Person")
 
 class PersonListView(TemplateView):
     template_name = "person_list.html"

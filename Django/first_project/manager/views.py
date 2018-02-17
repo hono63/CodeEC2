@@ -9,22 +9,59 @@ from manager.forms import PersonForm
 #get_object_404(Person, id=20)
 
 class GeneralList(ListView):
-    def __init__(self, model, title):
+    template_name = "general_list.html"
+    def setting(self, model, title):
         self.title = title
         self.model = model
-        self.template_name = "general_list.html"
 
-class GeneralView:
-    def __init__(self, model, title):
-        self.List = ListView()
-        self.Edit = UpdateView()
-        self.Add = CreateView()
-        self.Delete = DeleteView()
-        self.Detail = DetailView()
+class GeneralDetail(DetailView):
+    template_name = "general_form.html"
+    def setting(self, model, title):
+        self.title = title
         self.model = model
-        self.template_name = template_name
 
-PersonList = GeneralList(Person, "Person")
+class GeneralEdit(UpdateView):
+    template_name = "general_form.html"
+    def setting(self, model, title):
+        self.title = title
+        self.model = model
+
+class GeneralAdd(CreateView):
+    template_name = "general_form.html"
+    def setting(self, model, title):
+        self.title = title
+        self.model = model
+
+#class GeneralView:
+    #def __init__(self, model, title):
+        #self.List = ListView()
+        #self.Edit = UpdateView()
+        #self.Add = CreateView()
+        #self.Delete = DeleteView()
+        #self.Detail = DetailView()
+        #self.model = model
+        #self.template_name = template_name
+
+class PersonList(GeneralList):
+    def __init__(self):
+        # スーパークラスの設定
+        super(PersonList, self).setting(Person, "Person")
+
+class PersonDetail(GeneralDetail):
+    def __init__(self):
+        # スーパークラスの設定
+        super(PersonDetail, self).setting(Person, "Person")
+
+
+class PersonEdit(GeneralEdit):
+    def __init__(self):
+        # スーパークラスの設定
+        super(PersonEdit, self).setting(Person, "Person")
+
+class PersonAdd(GeneralAdd):
+    def __init__(self):
+        # スーパークラスの設定
+        super(PersonAdd, self).setting(Person, "Person")
 
 class PersonListView(TemplateView):
     template_name = "person_list.html"
@@ -36,33 +73,6 @@ class PersonListView(TemplateView):
         context ['persons'] = persons
 
         return render(self.request, self.template_name, context)
-
-def person_list2(request):
-    """書籍の一覧"""
-    persons2 = Person.objects.all().order_by('id')
-    return render(request,
-                  'person_list2.html',     # 使用するテンプレート
-                  {'persons2': persons2})         # テンプレートに渡すデータ
-
-def person_edit(request, person_id=None):
-    """Personの編集"""
-    if person_id:
-        person = get_object_or_404(Person, pk=person_id)
-    else:
-        person = Person()
-    
-    if request.method == 'POST':
-        #POSTされたrequestからフォームを作成
-        form = PersonForm(request.POST, instance=person)
-        if form.is_valid():
-            person = form.save(commit=False)
-            person.save()
-            return redirect('person_list2')
-    else:
-        #personインスタンスからフォームを作成
-        form = PersonForm(instance=person)
-    
-    return render(request, 'person_edit.html', dict(form=form, person_id=person_id))
 
 
 def person_delete(request, person_id):

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Person Edit{% endblock %}
+{% load bootstrap %}
+{% load staticfiles %}
+
+{% block body %}
+<!-- bootloader用おまじない -->
+<div id="wrapper">  <div id="page-wrapper">	<div class="row"> <div class="col-lg-6 full-width margin-top-20percent"> <div class="panel panel-default full-width">
+
+    <h3 class="page-header">Personの編集</h3>
+    <!--{% if pk %}
+    <form action="{% url 'person_edit_page' pk %}" method="post" class="form-horizontal" role="form">
+    {% else %}
+    <form action="{% url 'person_add_page' %}" method="post" class="form-horizontal" role="form">
+    {% endif %}-->
+    {% csrf_token %}
+    {{ form|bootstrap_horizontal }}
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">送信</button>
+        </div>
+    </div>
+    </form>
+    <a href="{% url 'person_list_page' %}" class="btn btn-default btn-sm">戻る</a>
+
+</div> </div> </div> </div> </div>
+<script>
+  $(document).ready(function() {
+    $('#form-table').DataTable({
+    });
+  });
+</script>
+{% endblock %}

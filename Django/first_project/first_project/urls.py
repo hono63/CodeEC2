@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from manager.views import PersonList 
+from manager.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,8 +26,9 @@ from django.conf.urls import url
 
 urlpatterns += [
     url(r'^person/$', PersonList.as_view(), name='person_list_page'),   # 一覧
-    #url(r'^person/add/$', person_edit, name='person_add'),  # 登録
-    #url(r'^person/mod/(?P<person_id>\d+)/$', manager_view.person_edit, name='person_mod'),  # 修正
+    url(r'^person/detail/(?P<pk>\d+)/$', PersonDetail.as_view(), name='person_detail_page'),  # 修正
+    url(r'^person/edit/(?P<pk>\d+)/$', PersonEdit.as_view(), name='person_edit_page'),  # 修正
+    url(r'^person/add/$', PersonAdd.as_view(), name='person_add_page'),  # 登録
     #url(r'^person/del/(?P<person_id>\d+)/$', manager_view.person_delete, name='person_del'),  # 削除
 ]
 

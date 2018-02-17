@@ -8,7 +8,7 @@ from manager.forms import PersonForm
 # Create your views here.
 #get_object_404(Person, id=20)
 
-class GeneralList:
+class GeneralList(ListView):
     def __init__(self, model, title):
         self.title = title
         self.model = model

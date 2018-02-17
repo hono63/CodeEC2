@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Person Edit{% endblock %}
+{% block title %}{{ title }} Edit{% endblock %}
 {% load bootstrap %}
 {% load staticfiles %}
 
@@ -7,7 +7,7 @@
 <!-- bootloader用おまじない -->
 <div id="wrapper">  <div id="page-wrapper">	<div class="row"> <div class="col-lg-6 full-width margin-top-20percent"> <div class="panel panel-default full-width">
 
-    <h3 class="page-header">Personの編集</h3>
+    <h3 class="page-header">{{ title }} 編集</h3>
     <!--{% if pk %}
     <form action="{% url 'person_edit_page' pk %}" method="post" class="form-horizontal" role="form">
     {% else %}
@@ -21,7 +21,7 @@
         </div>
     </div>
     </form>
-    <a href="{% url 'person_list_page' %}" class="btn btn-default btn-sm">戻る</a>
+    <a href="{% url list_page %}" class="btn btn-default btn-sm">戻る</a>
 
 </div> </div> </div> </div> </div>
 <script>

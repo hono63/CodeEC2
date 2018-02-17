@@ -13,8 +13,8 @@ from manager.forms import PersonForm
 class GeneralList(ListView):
     template_name = "general_list.html"
 
-    def setting(self, model, title):
-        self.title = title
+    def setting(self, model, model_name):
+        self.name = model_name
         self.model = model
 
     def get_context_data(self, **kwargs):
@@ -24,19 +24,24 @@ class GeneralList(ListView):
         https://stackoverflow.com/questions/2170228/iterate-over-model-instance-field-names-and-values-in-template
         """
         context = super().get_context_data(**kwargs)
-
+        # オブジェクト
         serial = serializers.serialize( "python", self.model.objects.all() )
         context ['serial'] = serial
         context ['label'] = self.model._meta.get_fields(include_parents=False, include_hidden=False)
+        # 名前など
+        context ['title'] = self.name.capitalize()
+        context ['add_page'] = self.name + "-add-page"
+        context ['edit_page'] = self.name + "-edit-page"
+        context ['detail_page'] = self.name + "-detail-page"
 
         return context
 
 class GeneralDetail(DetailView):
     template_name = "general_detail.html"
 
-    def setting(self, model, form, title):
-        self.title = title
+    def setting(self, model, model_name):
         self.model = model
+        self.name = model_name
 
     def get_context_data(self, **kwargs):
         """
@@ -51,6 +56,11 @@ class GeneralDetail(DetailView):
         #fields = self.form(data=model_to_dict(kwargs["object"]))
         fields = kwargs["object"].__dict__
         context ['fields'] = zip(fields.keys(), fields.values())
+        # 名前など
+        context ['title'] = self.name.capitalize()
+        context ['edit_page'] = self.name + "-edit-page"
+        context ['list_page'] = self.name + "-list-page"
+        context ['delete_page'] = self.name + "-delete-page"
 
         return context
 
@@ -62,8 +72,14 @@ class GeneralEdit(UpdateView):
 
 class GeneralAdd(CreateView):
     template_name = "general_form.html"
-    def setting(self, model, title):
-        self.title = title
+    def setting(self, model, model_name):
+        self.name = model_name
+        self.model = model
+
+class GeneralDelete(DeleteView):
+    template_name = "general_form.html"
+    def setting(self, model, model_name):
+        self.name = model_name
         self.model = model
 
 # PersonのView
@@ -71,12 +87,12 @@ class GeneralAdd(CreateView):
 class PersonList(GeneralList):
     def __init__(self):
         # スーパークラスの設定
-        super(PersonList, self).setting(Person, "Person")
+        super(PersonList, self).setting(Person, "person")
 
 class PersonDetail(GeneralDetail):
     def __init__(self):
         # スーパークラスの設定
-        super(PersonDetail, self).setting(Person, "Person")
+        super(PersonDetail, self).setting(Person, "person")
 
 
 class PersonEdit(GeneralEdit):

@@ -25,11 +25,11 @@ urlpatterns = [
 from django.conf.urls import url
 
 urlpatterns += [
-    url(r'^person/$', PersonList.as_view(), name='person_list_page'),   # 一覧
-    url(r'^person/detail/(?P<pk>\d+)/$', PersonDetail.as_view(), name='person_detail_page'),  # 修正
-    url(r'^person/edit/(?P<pk>\d+)/$', PersonEdit.as_view(), name='person_edit_page'),  # 修正
-    url(r'^person/add/$', PersonAdd.as_view(), name='person_add_page'),  # 登録
-    #url(r'^person/del/(?P<person_id>\d+)/$', manager_view.person_delete, name='person_del'),  # 削除
+    url(r'^person/$', PersonList.as_view(), name='person-list-page'),   # 一覧
+    url(r'^person/detail/(?P<pk>\d+)/$', PersonDetail.as_view(), name='person-detail-page'),  # 修正
+    url(r'^person/edit/(?P<pk>\d+)/$', PersonEdit.as_view(), name='person-edit-page'),  # 修正
+    url(r'^person/add/$', PersonAdd.as_view(), name='person-add-page'),  # 登録
+    url(r'^person/del/(?P<person_id>\d+)/$', PersonDelete.as_view(), name='person-delete-page'),  # 削除
 ]
 
 from django.conf import settings

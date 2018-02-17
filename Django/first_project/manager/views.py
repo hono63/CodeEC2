@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DetailView, DeleteView
+from django.forms.models import model_to_dict
 
 from manager.models import Person, Worker, Manager
 from manager.forms import PersonForm
@@ -15,10 +16,25 @@ class GeneralList(ListView):
         self.model = model
 
 class GeneralDetail(DetailView):
-    template_name = "general_form.html"
-    def setting(self, model, title):
+    template_name = "general_detail.html"
+    def setting(self, model, form, title):
         self.title = title
         self.model = model
+        self.form = form
+    
+    def get_context_data(self, **kwargs):
+        context = super(GeneralDetail, self).get_context_data(**kwargs)
+
+        #dicobj = self.form(data=model_to_dict(self.model.objects.get(pk=kwargs["pk"])))
+        #fields = self.form(data=model_to_dict(kwargs["object"]))
+        fields = kwargs["object"].__dict__
+        context ['fields'] = zip(fields.keys(), fields.values())
+        #context ['values'] = fields.values()
+        #context ['loop'] = [2,3]
+        #context.update(fields)
+
+        return context
+        #return render(self.request, self.template_name, context)
 
 class GeneralEdit(UpdateView):
     template_name = "general_form.html"
@@ -50,7 +66,7 @@ class PersonList(GeneralList):
 class PersonDetail(GeneralDetail):
     def __init__(self):
         # スーパークラスの設定
-        super(PersonDetail, self).setting(Person, "Person")
+        super(PersonDetail, self).setting(Person, PersonForm, "Person")
 
 
 class PersonEdit(GeneralEdit):

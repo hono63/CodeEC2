@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DetailView, DeleteView
 from django.forms.models import model_to_dict
+from django.core import serializers
 
 from manager.models import Person, Worker, Manager
 from manager.forms import PersonForm
@@ -18,12 +19,15 @@ class GeneralList(ListView):
 
     def get_context_data(self, **kwargs):
         """
-        Detailと同じような方法で。
+        Detailと同じような方法ではできない。
+        参考：
+        https://stackoverflow.com/questions/2170228/iterate-over-model-instance-field-names-and-values-in-template
         """
         context = super().get_context_data(**kwargs)
 
-        fields = kwargs["object"].__dict__
-        context ['fields'] = zip(fields.keys(), fields.values())
+        serial = serializers.serialize( "python", self.model.objects.all() )
+        context ['serial'] = serial
+        context ['label'] = self.model._meta.get_fields(include_parents=False, include_hidden=False)
 
         return context
 

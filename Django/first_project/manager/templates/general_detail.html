@@ -9,20 +9,21 @@
 
   <h3 class="page-header">{{ title }} 詳細</h3>
   <a href="{% url edit_page object.id %}" class="btn btn-default btn-sm">編集</a>
+  <a href="{% url delete_page object.id %}" class="btn btn-default btn-sm">削除</a>
   <a href="{% url list_page %}" class="btn btn-default btn-sm">戻る</a>
 
   <div class="panel-body full-width full-height">
-  <table id="list-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline full-width">
-    {% for f,v in fields %}
-      {% if f != "_state" %} {# _stateは除く #}
-        <tr>
-          <th>{{ f }}</th>
-          <td>{{ v }}</td>
-        </tr>
-      {% endif %}
-    {% endfor %}
-  </table>
+    <table id="list-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline full-width">
+      {% for f,v in fields %}
+        {% if f != "_state" %} {# _stateは除く #}
+          <tr>
+            <th>{{ f }}</th>
+            <td>{{ v }}</td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </table>
+  </div>
 
 </div> </div> </div> </div> </div>
 {% endblock %}
-

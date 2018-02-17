@@ -29,7 +29,7 @@ urlpatterns += [
     url(r'^person/detail/(?P<pk>\d+)/$', PersonDetail.as_view(), name='person-detail-page'),  # 修正
     url(r'^person/edit/(?P<pk>\d+)/$', PersonEdit.as_view(), name='person-edit-page'),  # 修正
     url(r'^person/add/$', PersonAdd.as_view(), name='person-add-page'),  # 登録
-    url(r'^person/del/(?P<person_id>\d+)/$', PersonDelete.as_view(), name='person-delete-page'),  # 削除
+    url(r'^person/del/(?P<pk>\d+)/$', PersonDelete.as_view(), name='person-delete-page'),  # 削除
 ]
 
 from django.conf import settings

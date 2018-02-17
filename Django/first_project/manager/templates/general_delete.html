@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} Delete{% endblock %}
+{% load bootstrap %}
+{% load staticfiles %}
+
+{% block body %}
+<!-- bootloader用おまじない -->
+<div id="wrapper">  <div id="page-wrapper">	<div class="row"> <div class="col-lg-6 full-width margin-top-20percent"> <div class="panel panel-default full-width">
+
+  <h3 class="page-header">{{ title }} 詳細</h3>
+  <form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="削除する" class="btn btn-default btn-sm" />
+  </form>
+  <a href="{% url detail_page object.id %}" class="btn btn-default btn-sm">戻る</a>
+
+</div> </div> </div> </div> </div>
+{% endblock %}

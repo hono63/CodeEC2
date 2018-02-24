@@ -95,8 +95,9 @@ class GeneralEdit(UpdateView):
 class GeneralAdd(CreateView):
     template_name = "general_form.html"
 
-    def setting(self, model):
+    def setting(self, model, form):
         self.model = model
+        self.form_class = form
         self.name = get_global_name(model).lower()
         self.success_url = reverse_lazy(self.name + "-list-page")
 
@@ -138,7 +139,7 @@ class PersonEdit(GeneralEdit):
 
 class PersonAdd(GeneralAdd):
     def __init__(self):
-        super().setting(Person)
+        super().setting(Person, Person)
 
 class PersonDelete(GeneralDelete):
     def __init__(self):
@@ -159,7 +160,7 @@ class ManagerEdit(GeneralEdit):
 
 class ManagerAdd(GeneralAdd):
     def __init__(self):
-        super().setting(Manager)
+        super().setting(Manager, ManagerForm)
 
 class ManagerDelete(GeneralDelete):
     def __init__(self):
@@ -180,7 +181,7 @@ class WorkerEdit(GeneralEdit):
 
 class WorkerAdd(GeneralAdd):
     def __init__(self):
-        super().setting(Worker)
+        super().setting(Worker, WorkerForm)
 
 class WorkerDelete(GeneralDelete):
     def __init__(self):

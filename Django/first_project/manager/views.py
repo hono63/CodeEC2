@@ -12,6 +12,7 @@ from manager.forms import PersonForm, ManagerForm, WorkerForm
 #get_object_404(Person, id=20)
 
 def get_global_name(ram):
+    "global変数の名前を取得する"
     name = str("")
     for k,v in globals().items():
         if id(ram) == id(v):
@@ -21,7 +22,6 @@ def get_global_name(ram):
 
 class GeneralList(ListView):
     template_name = "general_list.html"
-
 
     def setting(self, model):
         self.model = model
@@ -78,8 +78,9 @@ class GeneralDetail(DetailView):
 class GeneralEdit(UpdateView):
     template_name = "general_form.html"
 
-    def setting(self, model):
+    def setting(self, model, form):
         self.model = model
+        self.form_class = form
         self.name = get_global_name(model).lower()
         self.success_url = reverse_lazy(self.name + "-list-page")
 
@@ -133,7 +134,7 @@ class PersonDetail(GeneralDetail):
 
 class PersonEdit(GeneralEdit):
     def __init__(self):
-        super().setting(Person)
+        super().setting(Person, PersonForm)
 
 class PersonAdd(GeneralAdd):
     def __init__(self):
@@ -154,7 +155,7 @@ class ManagerDetail(GeneralDetail):
 
 class ManagerEdit(GeneralEdit):
     def __init__(self):
-        super().setting(Manager)
+        super().setting(Manager, ManagerForm)
 
 class ManagerAdd(GeneralAdd):
     def __init__(self):
@@ -175,7 +176,7 @@ class WorkerDetail(GeneralDetail):
 
 class WorkerEdit(GeneralEdit):
     def __init__(self):
-        super().setting(Worker)
+        super().setting(Worker, WorkerForm)
 
 class WorkerAdd(GeneralAdd):
     def __init__(self):

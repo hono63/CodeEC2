@@ -1,6 +1,8 @@
 from django.db import models
+#from abc import ABCMeta, abstractmethod
 
 class GeneralModel(models.Model):
+    "抽象基底モデルクラス"
     class Meta:
         abstract = True
     def sample_func2(self):

@@ -6,17 +6,26 @@ from django.core import serializers
 from django.urls import reverse_lazy
 
 from manager.models import Person, Worker, Manager
-from manager.forms import PersonForm
+from manager.forms import PersonForm, ManagerForm, WorkerForm
 
 # Create your views here.
 #get_object_404(Person, id=20)
 
+def get_global_name(ram):
+    name = str("")
+    for k,v in globals().items():
+        if id(ram) == id(v):
+            name = k
+            break
+    return name
+
 class GeneralList(ListView):
     template_name = "general_list.html"
 
-    def setting(self, model, model_name):
-        self.name = model_name
+
+    def setting(self, model):
         self.model = model
+        self.name = get_global_name(model).lower()
 
     def get_context_data(self, **kwargs):
         """
@@ -29,7 +38,7 @@ class GeneralList(ListView):
         # オブジェクト
         serial = serializers.serialize( "python", self.model.objects.all() )
         context ['serial'] = serial
-        context ['label'] = self.model._meta.get_fields(include_parents=False, include_hidden=False)
+        context ['label'] = self.model._meta.get_fields(include_parents=True, include_hidden=False)
         # 名前など
         context ['title'] = self.name.capitalize()
         context ['add_page'] = self.name + "-add-page"
@@ -41,9 +50,9 @@ class GeneralList(ListView):
 class GeneralDetail(DetailView):
     template_name = "general_detail.html"
 
-    def setting(self, model, model_name):
+    def setting(self, model):
         self.model = model
-        self.name = model_name
+        self.name = get_global_name(model).lower()
 
     def get_context_data(self, **kwargs):
         """
@@ -69,9 +78,9 @@ class GeneralDetail(DetailView):
 class GeneralEdit(UpdateView):
     template_name = "general_form.html"
 
-    def setting(self, model, model_name):
-        self.name = model_name
+    def setting(self, model):
         self.model = model
+        self.name = get_global_name(model).lower()
         self.success_url = reverse_lazy(self.name + "-list-page")
 
     def get_context_data(self, **kwargs):
@@ -85,9 +94,9 @@ class GeneralEdit(UpdateView):
 class GeneralAdd(CreateView):
     template_name = "general_form.html"
 
-    def setting(self, model, model_name):
-        self.name = model_name
+    def setting(self, model):
         self.model = model
+        self.name = get_global_name(model).lower()
         self.success_url = reverse_lazy(self.name + "-list-page")
 
     def get_context_data(self, **kwargs):
@@ -100,9 +109,9 @@ class GeneralAdd(CreateView):
 class GeneralDelete(DeleteView):
     template_name = "general_delete.html"
 
-    def setting(self, model, model_name):
-        self.name = model_name
+    def setting(self, model):
         self.model = model
+        self.name = get_global_name(model).lower()
         self.success_url = reverse_lazy(self.name + "-list-page")
 
     def get_context_data(self, **kwargs):
@@ -116,26 +125,62 @@ class GeneralDelete(DeleteView):
 class PersonList(GeneralList):
     def __init__(self):
         # スーパークラスの設定
-        super().setting(Person, "person")
+        super().setting(Person)
 
 class PersonDetail(GeneralDetail):
     def __init__(self):
-        super().setting(Person, "person")
+        super().setting(Person)
 
 class PersonEdit(GeneralEdit):
     def __init__(self):
-        super().setting(Person, "person")
+        super().setting(Person)
 
 class PersonAdd(GeneralAdd):
     def __init__(self):
-        super().setting(Person, "person")
+        super().setting(Person)
 
 class PersonDelete(GeneralDelete):
     def __init__(self):
-        super().setting(Person, "person")
+        super().setting(Person)
+
+# ManagerのView
+class ManagerList(GeneralList):
+    def __init__(self):
+        super().setting(Manager)
+
+class ManagerDetail(GeneralDetail):
+    def __init__(self):
+        super().setting(Manager)
+
+class ManagerEdit(GeneralEdit):
+    def __init__(self):
+        super().setting(Manager)
+
+class ManagerAdd(GeneralAdd):
+    def __init__(self):
+        super().setting(Manager)
+
+class ManagerDelete(GeneralDelete):
+    def __init__(self):
+        super().setting(Manage)
 
 # WorkerのView
+class WorkerList(GeneralList):
+    def __init__(self):
+        super().setting(Worker)
 
-class ManagerListView(ListView):
-    model = Manager
-    template = "manager_list.html"
+class WorkerDetail(GeneralDetail):
+    def __init__(self):
+        super().setting(Worker)
+
+class WorkerEdit(GeneralEdit):
+    def __init__(self):
+        super().setting(Worker)
+
+class WorkerAdd(GeneralAdd):
+    def __init__(self):
+        super().setting(Worker)
+
+class WorkerDelete(GeneralDelete):
+    def __init__(self):
+        super().setting(Worker)

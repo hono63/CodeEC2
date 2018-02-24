@@ -1,8 +1,12 @@
 from django.db import models
 
-# Create your models here.
+class GeneralModel(models.Model):
+    class Meta:
+        abstract = True
+    def sample_func2(self):
+        return "sample func2 だよ"
 
-class Person(models.Model):
+class Person(GeneralModel):
     MAN = 0
     WOMAN = 1
 
@@ -28,7 +32,7 @@ class Person(models.Model):
     #current_address = models.IntegerField()
     #email       = models.EmailField()
 
-class Manager(models.Model):
+class Manager(GeneralModel):
     # 部署の定数
     DEP_ACCOUNTING = 0  # 経理
     DEP_SALES = 5  # 営業
@@ -47,7 +51,7 @@ class Manager(models.Model):
     #joined_at   = models.DateTimeField()
     #quited_at   = models.DateTimeField(null=True, blank=True)
 
-class Worker(models.Model):
+class Worker(GeneralModel):
     person = models.ForeignKey('Person', blank=True, null=True, on_delete=models.SET_NULL)
     #joined_at = models.DateTimeField()
     #quited_at = models.DateTimeField(null=True, blank=True)

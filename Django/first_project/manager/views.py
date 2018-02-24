@@ -26,6 +26,7 @@ class GeneralList(ListView):
     def setting(self, model):
         self.model = model
         self.name = get_global_name(model).lower()
+        self.labels = self.model._meta.get_fields(include_parents=True, include_hidden=True)
 
     def get_context_data(self, **kwargs):
         """
@@ -38,7 +39,7 @@ class GeneralList(ListView):
         # オブジェクト
         serial = serializers.serialize( "python", self.model.objects.all() )
         context ['serial'] = serial
-        context ['label'] = self.model._meta.get_fields(include_parents=True, include_hidden=False)
+        context ['label'] = self.labels
         # 名前など
         context ['title'] = self.name.capitalize()
         context ['add_page'] = self.name + "-add-page"
